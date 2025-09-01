@@ -1,58 +1,41 @@
-CryptoSuiteAPI
+# CryptoSuiteAPI
 
-CryptoSuiteAPI, Mempool.space REST API
- üzerinde Java ve REST Assured kullanarak kapsamlı API testleri gerçekleştiren bir projedir. Bu proje, Bitcoin ağındaki mempool verilerini, blok bilgilerini ve işlem detaylarını doğrulamak için tasarlanmıştır.
+CryptoSuiteAPI, Mempool.space REST API üzerinde Java ve REST Assured kullanarak kapsamlı API testleri gerçekleştiren bir projedir. Bu proje, Bitcoin ağındaki mempool verilerini, blok bilgilerini ve işlem detaylarını doğrulamak için tasarlanmıştır.
 
-Özellikler
+## Özellikler
+- REST Assured ile GET endpoint testleri
+- JSON veri doğrulama ve schema kontrolü
+- Response süreleri ve HTTP durum kodu doğrulaması
+- Parametreli istekler ile dinamik test senaryoları
+- Test raporlama ve loglama
 
-REST Assured ile GET endpoint testleri
+## Test Senaryoları
 
-JSON veri doğrulama ve schema kontrolü
+### Mempool Bilgisi Testi
+- **Endpoint:** `/api/mempool`
+- **Beklenen:** HTTP 200, `count` alanı pozitif, `vsize` ve `total_fee` değerleri doğru tipte
 
-Response süreleri ve HTTP durum kodu doğrulaması
+### Blok Bilgisi Testi
+- **Endpoint:** `/api/block/{hash}`
+- **Beklenen:** HTTP 200, blok hash ve height doğru tipte, transactions listesi dolu
 
-Parametreli istekler ile dinamik test senaryoları
+### Son Bloklar Listesi Testi
+- **Endpoint:** `/api/blocks`
+- **Beklenen:** HTTP 200, son 10 blok listelenir, her blokte `height`, `hash`, `time` alanları mevcut
 
-Test raporlama ve loglama
+### Transaction Detay Testi
+- **Endpoint:** `/api/tx/{txid}`
+- **Beklenen:** HTTP 200, `vin`, `vout`, `fee` alanları doğru tipte ve boş değil
 
-Test Senaryoları
+## Örnek JSON Response
 
-Mempool Bilgisi Testi
-
-Endpoint: /api/mempool
-
-Beklenen: HTTP 200, count alanı pozitif, vsize ve total_fee değerleri doğru tipte
-
-Blok Bilgisi Testi
-
-Endpoint: /api/block/{hash}
-
-Beklenen: HTTP 200, blok hash ve height doğru tipte, transactions listesi dolu
-
-Son Bloklar Listesi Testi
-
-Endpoint: /api/blocks
-
-Beklenen: HTTP 200, son 10 blok listelenir, her blokte height, hash, time alanları mevcut
-
-Transaction Detay Testi
-
-Endpoint: /api/tx/{txid}
-
-Beklenen: HTTP 200, vin, vout, fee alanları doğru tipte ve boş değil
-
-Örnek JSON Response
-
-Mempool Endpoint /api/mempool:
-
+**Mempool Endpoint `/api/mempool`:**
+```json
 {
   "count": 12,
   "vsize": 5760,
   "total_fee": 0.00012345
 }
-
-
-Block Endpoint /api/block/{hash}:
 
 {
   "id": "0000000000000000000763e4...",
@@ -63,6 +46,7 @@ Block Endpoint /api/block/{hash}:
     "a1b2c3d4..."
   ]
 }
+
 
 Amaç
 
